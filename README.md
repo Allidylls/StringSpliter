@@ -1,7 +1,7 @@
 CStringSpliter
 ==============
 
-C++ class to split a string into pieces by given delimiters.
+C++ class to split a string into pieces by given delimiters, a wrapper of [c_tokenizer](http://www.cplusplus.com/faq/sequences/strings/split/).
 
 
 CStringSpliter.h
