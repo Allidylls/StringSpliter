@@ -99,10 +99,8 @@ Usage
 
 ```c++
 char *str = "$PTNL,PJK,102823.80,012613,+3541087.713,N,+1878282.023,E,1,16,0.8,EHT+52.668,M*4F";
-int n;
-const char* sec;
 CStringSpliter spliter(str, ",");
-for (n=0, sec = spliter.Next(); sec; sec=spliter.Next(), n++) {
+for (int n=0, const char *sec = spliter.Next(); sec; sec=spliter.Next(), n++) {
 	printf("%2d: %s\n", n, sec);
 }
 ```
