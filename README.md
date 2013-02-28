@@ -16,25 +16,22 @@ CStringSpliter.h
 
 class CStringSpliter {
 public:
-  enum {EMPTIES_OK = 0, NO_EMPTIES};
+	enum {EMPTIES_OK = 0, NO_EMPTIES};
 
 public:
-	CStringSpliter(const char* str, const char* delimiters, int empties = CStringSpliter::EMPTIES_OK);
-	~CStringSpliter();
-	const char* Next();
+    CStringSpliter(const char* str, const char* delimiters, int empties = CStringSpliter::EMPTIES_OK);
+    ~CStringSpliter();
+    const char* Next();
 
 private:
-	char*       m_string;
-	const char* m_delimiters;
-	char*       m_current;
-	char*       m_next;
-	bool        m_is_ignore_empties;
-
-private:
-	char* Sdup(const char* s);
+    char*       m_string;
+    const char* m_delimiters;
+    char*       m_current;
+    char*       m_next;
+    bool        m_is_ignore_empties;
 };
 
-#endif 
+#endif
 ```
 
 CStringSpliter.cpp
@@ -43,13 +40,22 @@ CStringSpliter.cpp
 ```c++
 /* CStringSpliter.cpp */
 
-#include <stdlib.h>
-#include <string.h>
+#include <string>
 #include "CStringSpliter.h"
 
 CStringSpliter::CStringSpliter(const char* str, const char* delimiters, int empties)
 {
-  this->m_string            = (str && delimiters) ? this->Sdup(str) : NULL;
+	if (str && delimiters) {
+		size_t n = strlen(str) + 1;
+		char  *p = (char*)malloc(n);
+		if (p) {
+			this->m_string = (char*)memcpy(p, str, n);
+		} else {
+			this->m_string = NULL;
+		}
+	} else {
+		this->m_string = NULL;
+	}
 	this->m_delimiters        = delimiters;
 	this->m_current           = NULL;
 	this->m_next              = this->m_string;
@@ -62,22 +68,15 @@ CStringSpliter::~CStringSpliter()
 	this->m_string = NULL;
 }
 
-char* CStringSpliter::Sdup(const char* s)
-{
-	size_t n = strlen(s) + 1;
-	char  *p = (char*)malloc(n);
-	return p ? (char*)memcpy(p, s, n) : NULL;
-}
-
 const char* CStringSpliter::Next()
 {
 	if (!this->m_string || !this->m_next) {
 		return NULL;
 	}
-	
+
 	this->m_current = this->m_next;
 	this->m_next = strpbrk(this->m_current, this->m_delimiters);
-	
+
 	if (this->m_next) {
 		*(this->m_next) = '\0';
 		this->m_next += 1;
@@ -85,12 +84,12 @@ const char* CStringSpliter::Next()
 			this->m_next += strspn(this->m_next, this->m_delimiters);
 			if (!(*(this->m_current))) {
 				return this->Next();
-      }
+			}
 		}
 	} else if (this->m_is_ignore_empties && !(*(this->m_current))) {
 		return NULL;
 	}
-	
+
 	return this->m_current;
 }
 ```
@@ -104,7 +103,7 @@ int n;
 const char* sec;
 CStringSpliter spliter(str, ",");
 for (n=0, sec = spliter.Next(); sec; sec=spliter.Next(), n++) {
-	printf("%d: %s\n", n, sec);
+	printf("%2d: %s\n", n, sec);
 }
 ```
 
