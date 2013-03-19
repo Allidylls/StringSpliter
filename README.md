@@ -1,26 +1,26 @@
-CStringSpliter
+StringSpliter
 ==============
 
 C++ class to split a string into pieces by given delimiters, a wrapper of [c_tokenizer](http://www.cplusplus.com/faq/sequences/strings/split/).
 
 
-CStringSpliter.h
+StringSpliter.h
 ----------------
 
 ```c++
-/* CStringSpliter.h */
+/* StringSpliter.h */
 
 #pragma once
-#ifndef CSTRINGSPLITER_H
-#define CSTRINGSPLITER_H
+#ifndef STRINGSPLITER_H
+#define STRINGSPLITER_H
 
-class CStringSpliter {
+class StringSpliter {
 public:
 	enum {EMPTIES_OK = 0, NO_EMPTIES};
 
 public:
-    CStringSpliter(const char* str, const char* delimiters, int empties = CStringSpliter::EMPTIES_OK);
-    ~CStringSpliter();
+    StringSpliter(const char* str, const char* delimiters, int empties = StringSpliter::EMPTIES_OK);
+    ~StringSpliter();
     const char* Next();
 
 private:
@@ -34,16 +34,16 @@ private:
 #endif
 ```
 
-CStringSpliter.cpp
+StringSpliter.cpp
 ------------------
 
 ```c++
-/* CStringSpliter.cpp */
+/* StringSpliter.cpp */
 
 #include <string>
-#include "CStringSpliter.h"
+#include "StringSpliter.h"
 
-CStringSpliter::CStringSpliter(const char* str, const char* delimiters, int empties)
+StringSpliter::StringSpliter(const char* str, const char* delimiters, int empties)
 {
 	if (str && delimiters) {
 		size_t n = strlen(str) + 1;
@@ -59,16 +59,16 @@ CStringSpliter::CStringSpliter(const char* str, const char* delimiters, int empt
 	this->m_delimiters        = delimiters;
 	this->m_current           = NULL;
 	this->m_next              = this->m_string;
-	this->m_is_ignore_empties = (empties != CStringSpliter::EMPTIES_OK);
+	this->m_is_ignore_empties = (empties != StringSpliter::EMPTIES_OK);
 }
 
-CStringSpliter::~CStringSpliter()
+StringSpliter::~StringSpliter()
 {
 	free(this->m_string);
 	this->m_string = NULL;
 }
 
-const char* CStringSpliter::Next()
+const char* StringSpliter::Next()
 {
 	if (!this->m_string || !this->m_next) {
 		return NULL;
@@ -99,7 +99,7 @@ Usage
 
 ```c++
 char *str = "$PTNL,PJK,102823.80,012613,+3541087.713,N,+1878282.023,E,1,16,0.8,EHT+52.668,M*4F";
-CStringSpliter spliter(str, ",");
+StringSpliter spliter(str, ",");
 int n;
 const char *sec;
 for (n=0, sec = spliter.Next(); sec; sec=spliter.Next(), n++) {
