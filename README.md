@@ -4,15 +4,15 @@ StringSpliter
 C++ class to split a string into pieces by given delimiters, a wrapper of [c_tokenizer](http://www.cplusplus.com/faq/sequences/strings/split/).
 
 
-StringSpliter.h
+string_spliter.h
 ----------------
 
 ```c++
-/* StringSpliter.h */
+/* string_spliter.h */
 
 #pragma once
-#ifndef STRINGSPLITER_H
-#define STRINGSPLITER_H
+#ifndef STRING_SPLITER_H
+#define STRING_SPLITER_H
 
 class StringSpliter {
 public:
@@ -34,14 +34,14 @@ private:
 #endif
 ```
 
-StringSpliter.cpp
+string_spliter.cpp
 ------------------
 
 ```c++
-/* StringSpliter.cpp */
+/* string_spliter.cpp */
 
 #include <string>
-#include "StringSpliter.h"
+#include "string_spliter.h"
 
 StringSpliter::StringSpliter(const char* str, const char* delimiters, int empties)
 {
@@ -99,10 +99,10 @@ Usage
 
 ```c++
 char *str = "$PTNL,PJK,102823.80,012613,+3541087.713,N,+1878282.023,E,1,16,0.8,EHT+52.668,M*4F";
-StringSpliter spliter(str, ",");
+StringSpliter string_spliter(str, ",");
 int n;
 const char *sec;
-for (n=0, sec = spliter.Next(); sec; sec=spliter.Next(), n++) {
+for (n=0, sec = string_spliter.Next(); sec; sec=string_spliter.Next(), n++) {
 	printf("%2d: %s\n", n, sec);
 }
 ```
