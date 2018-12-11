@@ -6,7 +6,7 @@
 
 class StringSpliter {
 public:
-	enum {EMPTIES_OK = 0, NO_EMPTIES};
+    enum {EMPTIES_OK = 0, NO_EMPTIES};
 
 public:
     StringSpliter(const char* str, const char* delimiters, int empties = StringSpliter::EMPTIES_OK);
